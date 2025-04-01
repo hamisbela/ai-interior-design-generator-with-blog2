@@ -1,0 +1,69 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Environment variables configuration
+[build.environment]
+  # Remove the quotes to prevent literal interpretation of ${URL}
+  VITE_SITE_URL = "${URL}"
+
+# Set specific handlers for .txt and .xml files
+[[headers]]
+  for = "/*.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=UTF-8"
+
+[[headers]]
+  for = "/*.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=UTF-8"
+
+# Make sure static files are served directly and not routed to SPA
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+
+# Handle all other routes - this must be AFTER the specific rules above
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Asset optimization and caching
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.images]
+  compress = true
+
+# Set default headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Cache-Control = "public, max-age=31536000"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Set different cache headers for static assets
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"

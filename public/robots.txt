@@ -1,0 +1,13 @@
+# robots.txt for https://aiinteriordesigngenerator.com/
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://aiinteriordesigngenerator.com/sitemap.xml
+
+# Block specific directories or files if needed
+# Disallow: /private/
+# Disallow: /admin/
+
+# Crawl delay for bots (optional)
+Crawl-delay: 10
